@@ -59,6 +59,9 @@ class BinarySearchTree {
    * Returns the tree. Uses recursion. */
 
   insertRecursively(val) {
+    
+    // Reference for tree
+    const tree = this;
 
     // Edge case: if no root is there, set to root
     if(!this.root){
@@ -66,26 +69,31 @@ class BinarySearchTree {
       return this
     }
 
-    // If val > root
-    if(val > this.root){
+    else{
 
-      // BUT if right Node does not exist, insert Node and return
-      if(this.right == null){
-        this.right = new Node(val)
-        return this
+      /**
+       * Recursively 
+       * @param {Node} n A Node in the tree. 
+       * @returns 
+       */
+      function insert(n){
+        if(val > n.val){
+          if(!n.right){
+            n.right = new Node(val)
+            return tree
+          }
+          return insert(n.right)
+        } else if(val < n.val){
+          if(!n.left){
+            n.left = new Node(val)
+            return tree
+          }
+          return insert(n.left)
+        }
+        return tree
       }
-      // Otherwise, go right and run again
-      // ******* HOW TO CALL AGAIN???
-      return this.insertRecursively(val)
-    } else if(val < this.root){
-      if(this.left == null){
-        this.left = new Node(val)
-        return this
-      }
-      return this.insertRecursively(this.left)
+      return insert(tree.root)
     }
-
-    return this
   }
 
   /** find(val): search the tree for a node with value val.
