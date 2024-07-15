@@ -14,28 +14,73 @@ class BinarySearchTree {
   /** insert(val): insert a new node into the BST with value val.
    * Returns the tree. Uses iteration. */
 
-  insert(val) {
+  insert(val){
+    // if(this.root == null) {
+    //   this.root = new Node(val)
+    //   return this
+    // } else{
+    const cursor = this.root 
+    while(cursor.left !==null || cursor.right !== null){
+      switch(val){
+        case val > cursor.val:
+          cursor = cursor.right
+          break;
+        case val < cursor.val:
+          cursor = cursor.left
+          break;
+        case val == cursor.val:
+          return "Val already in tree"
+      }
+    }
+    
+    if(val > cursor.val) cursor.right = new Node(val)
+    else if(val < cursor.val) cursor.left = new Node(val)
 
+    return this
+// }
   }
 
   /** insertRecursively(val): insert a new node into the BST with value val.
    * Returns the tree. Uses recursion. */
 
   insertRecursively(val) {
+    if(cursor == undefined){
+      const cursor = this.root
+    }
+    // Edge case: val already in tree
+    if(cursor.val == val) return "Val already exists in tree"
 
+    const cursor = this.root 
+    if(cursor.left == null || cursor.right == null){
+      if(val > cursor.val) cursor.right = new Node(val)
+      else cursor.left = new Node(val) 
+
+      return this
+    }
+
+    if(val > cursor.val) this.insertRecursively(this.right)
+    if(val < cursor.val) this.insertRecursively(this.left)
   }
 
   /** find(val): search the tree for a node with value val.
    * return the node, if found; else undefined. Uses iteration. */
 
   find(val) {
+    const cursor = this.root
+    while(cursor){
+      if(val == cursor.val) return cursor
+      else if(val > cursor.val) cursor = cursor.right
+      else if(val < cursor.val) cursor = cursor.left
+    }
 
+    return
   }
 
   /** findRecursively(val): search the tree for a node with value val.
    * return the node, if found; else undefined. Uses recursion. */
 
   findRecursively(val) {
+    const cursor = this.root
 
   }
 
@@ -43,6 +88,7 @@ class BinarySearchTree {
    * Return an array of visited nodes. */
 
   dfsPreOrder() {
+    const arr = new Array(Node)
 
   }
 
