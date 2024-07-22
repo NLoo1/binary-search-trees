@@ -114,15 +114,61 @@ class BinarySearchTree {
    * return the node, if found; else undefined. Uses recursion. */
 
   findRecursively(val) {
-    const cursor = this.root
+     // Reference for tree
+     const tree = this;
 
+     // Edge case: if no root is there, set to root
+     if(!this.root){
+       this.root = new Node(val)
+       return this
+     }
+ 
+     else{
+ 
+       /**
+        * Recursively 
+        * @param {Node} n A Node in the tree. 
+        * @returns 
+        */
+       function find(n){
+        if(val == n.val) return n
+        else if(val > n.val){
+           if(!n.right){
+             return
+           }
+           return find(n.right)
+         } else if(val < n.val){
+           if(!n.left){
+             return
+           }
+           return find(n.left)
+         }
+         return tree
+       }
+       return find(tree.root)
+     }
   }
 
   /** dfsPreOrder(): Traverse the array using pre-order DFS.
    * Return an array of visited nodes. */
 
   dfsPreOrder() {
-    const arr = new Array(Node)
+    const arr = []
+
+    if(!this.root){
+      return arr
+    }
+
+    const tree = this
+
+    function traverse(n){
+      arr.push(n.val)
+      if(n.left) traverse(n.left)
+      if (n.right) traverse(n.right)
+    }
+
+    traverse(this.root)
+    return arr
 
   }
 
@@ -130,6 +176,22 @@ class BinarySearchTree {
    * Return an array of visited nodes. */
 
   dfsInOrder() {
+    const arr = []
+
+    if(!this.root){
+      return arr
+    }
+
+    const tree = this
+
+    function traverse(n){
+      if(n.left) traverse(n.left)
+      arr.push(n.val)
+      if (n.right) traverse(n.right)
+    }
+
+    traverse(this.root)
+    return arr
 
   }
 
@@ -137,14 +199,47 @@ class BinarySearchTree {
    * Return an array of visited nodes. */
 
   dfsPostOrder() {
+    const arr = []
 
+    if(!this.root){
+      return arr
+    }
+
+    const tree = this
+
+    function traverse(n){
+      if(n.left) traverse(n.left)
+      if (n.right) traverse(n.right)
+      arr.push(n.val)
+
+    }
+
+    traverse(this.root)
+    return arr
   }
 
   /** bfs(): Traverse the array using BFS.
    * Return an array of visited nodes. */
 
   bfs() {
+    let node = this.root;
+    let queue = [];
+    let data = [];
 
+    queue.push(node);
+
+    while (queue.length) {
+      node = queue.shift();
+      data.push(node.val);
+      if (node.left) {
+        queue.push(node.left);
+      }
+      if (node.right) {
+        queue.push(node.right);
+      }
+    }
+
+    return data;
   }
 
   /** Further Study!
